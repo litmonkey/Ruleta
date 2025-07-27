@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ruleta Beso o Cachetada</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffe4e1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      color: #d81b60;
+      margin-bottom: 20px;
+    }
+
+    .wheel-container {
+      position: relative;
+      width: 80vmin;
+      height: 80vmin;
+      max-width: 400px;
+      max-height: 400px;
+    }
+
+    .pointer {
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-bottom: 30px solid #c2185b;
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    .wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 8px solid #880e4f;
+      background: conic-gradient(#f06292 0deg 180deg, #f8bbd0 180deg 360deg);
+      transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1);
+      position: relative;
+      z-index: 1;
+    }
+
+    .sector-label {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0% 0%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .label-beso {
+      transform: rotate(-45deg) translateX(-100%) translateY(-100%);
+    }
+
+    .label-cachetada {
+      transform: rotate(135deg) translateX(-100%) translateY(-100%);
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      background-color: #d81b60;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #ad1457;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      font-size: 1.5rem;
+      color: #c2185b;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    iframe {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎯 Ruleta: ¿Beso o Cachetada?</h1>
+
+  <div class="wheel-container">
+    <div class="pointer"></div>
+    <div class="wheel" id="wheel">
+      <div class="sector-label label-beso">💋 Beso</div>
+      <div class="sector-label label-cachetada">✋ Cachetada</div>
+    </div>
+  </div>
+
+  <button onclick="spinWheel()">Girar</button>
+  <div id="resultado">💋 ¡Toca beso!</div>
+
+  <!-- YouTube kiss sound effect (oculto) -->
+  <iframe
+    id="kissSound"
+    src=""
+    allow="autoplay"
+  ></iframe>
+
+  <script>
+    function spinWheel() {
+      const wheel = document.getElementById('wheel');
+      const resultado = document.getElementById('resultado');
+      const kissSound = document.getElementById('kissSound');
+
+      resultado.style.opacity = 0;
+      kissSound.src = ''; // reinicia el iframe
+
+      const vueltas = 5;
+      const anguloFinal = 90;
+      const rotacion = (360 * vueltas) + anguloFinal;
+
+      // Gira la ruleta
+      wheel.style.transform = `rotate(${rotacion}deg)`;
+
+      // Mostrar resultado y reproducir sonido
+      setTimeout(() => {
+        resultado.textContent = "💋 ¡Toca beso!";
+        resultado.style.opacity = 1;
+
+        // Reproduce el sonido (usa un video corto de YouTube)
+        kissSound.src = "https://www.youtube.com/embed/gRJWfnJPR1w?autoplay=1&start=0&end=3&mute=0&controls=0&rel=0&showinfo=0";
+      }, 4000);
+    }
+  </script>
+</body>
+</html>
