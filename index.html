@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ruleta Beso o Cachetada</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #ffebee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      color: #d81b60;
+      margin-bottom: 20px;
+    }
+
+    .wheel-container {
+      position: relative;
+      width: 80vmin;
+      height: 80vmin;
+      max-width: 400px;
+      max-height: 400px;
+    }
+
+    .wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 8px solid #880e4f;
+      background: conic-gradient(
+        #f8bbd0 0deg 180deg,
+        #f06292 180deg 360deg
+      );
+      transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+
+    .label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5rem;
+      color: #880e4f;
+      font-weight: bold;
+    }
+
+    .pointer {
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-bottom: 30px solid #c2185b;
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      background-color: #d81b60;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #ad1457;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎯 Ruleta: ¿Beso o Cachetada?</h1>
+  <div class="wheel-container">
+    <div class="pointer"></div>
+    <div class="wheel" id="wheel"></div>
+    <div class="label">¡Gira la ruleta!</div>
+  </div>
+  <button onclick="spinWheel()">Girar</button>
+
+  <script>
+    function spinWheel() {
+      const wheel = document.getElementById('wheel');
+
+      // Siempre hacer que caiga en BESOS (sector inicial: 0 a 180 grados)
+      const baseRotation = 360 * 5; // Vueltas completas
+      const offsetToBeso = Math.floor(Math.random() * 90) - 45; // Un poco de variación hacia la mitad de "Beso"
+      const totalRotation = baseRotation + offsetToBeso;
+
+      wheel.style.transform = `rotate(${totalRotation}deg)`;
+
+      setTimeout(() => {
+        alert("💋 ¡Beso!");
+      }, 4000);
+    }
+  </script>
+</body>
+</html>
