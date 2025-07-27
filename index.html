@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background: #ffebee;
+      background: #ffe4e1;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -35,20 +35,34 @@
       border-radius: 50%;
       border: 8px solid #880e4f;
       background: conic-gradient(
-        #f8bbd0 0deg 180deg,
-        #f06292 180deg 360deg
+        #f06292 0deg 180deg,
+        #f8bbd0 180deg 360deg
       );
+      position: relative;
       transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1);
     }
 
-    .label {
+    .sector-label {
       position: absolute;
+      width: 50%;
+      height: 50%;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 1.5rem;
-      color: #880e4f;
+      transform-origin: 0% 0%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-weight: bold;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .label-beso {
+      transform: rotate(-45deg) translateX(-100%) translateY(-100%);
+    }
+
+    .label-cachetada {
+      transform: rotate(135deg) translateX(-100%) translateY(-100%);
     }
 
     .pointer {
@@ -78,30 +92,48 @@
     button:hover {
       background-color: #ad1457;
     }
+
+    #resultado {
+      margin-top: 20px;
+      font-size: 1.5rem;
+      color: #c2185b;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
   </style>
 </head>
 <body>
   <h1>🎯 Ruleta: ¿Beso o Cachetada?</h1>
   <div class="wheel-container">
     <div class="pointer"></div>
-    <div class="wheel" id="wheel"></div>
-    <div class="label">¡Gira la ruleta!</div>
+    <div class="wheel" id="wheel">
+      <div class="sector-label label-beso">💋 Beso</div>
+      <div class="sector-label label-cachetada">✋ Cachetada</div>
+    </div>
   </div>
   <button onclick="spinWheel()">Girar</button>
+
+  <div id="resultado">💋 ¡Toca beso!</div>
 
   <script>
     function spinWheel() {
       const wheel = document.getElementById('wheel');
+      const resultado = document.getElementById('resultado');
 
-      // Siempre hacer que caiga en BESOS (sector inicial: 0 a 180 grados)
-      const baseRotation = 360 * 5; // Vueltas completas
-      const offsetToBeso = Math.floor(Math.random() * 90) - 45; // Un poco de variación hacia la mitad de "Beso"
-      const totalRotation = baseRotation + offsetToBeso;
+      // Oculta resultado al girar
+      resultado.style.opacity = 0;
 
-      wheel.style.transform = `rotate(${totalRotation}deg)`;
+      const vueltas = 5; // vueltas completas
+      const anguloFinal = 90; // justo en el centro de "Beso"
+      const rotacion = (360 * vueltas) + anguloFinal;
 
+      wheel.style.transform = `rotate(${rotacion}deg)`;
+
+      // Muestra resultado después de que termina la animación
       setTimeout(() => {
-        alert("💋 ¡Beso!");
+        resultado.style.opacity = 1;
+        resultado.textContent = "💋 ¡Toca beso!";
       }, 4000);
     }
   </script>
